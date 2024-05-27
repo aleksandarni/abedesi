@@ -80,16 +80,28 @@ document.addEventListener('DOMContentLoaded', function() {
       lineElement.dataset.comment2 = line.comment2;
       const lineName = document.createElement('h2');
       lineName.textContent = `${line.name}: ${line.start} - ${line.finish}`;
+      lineElement.appendChild(lineName);
+      linesElement.appendChild(lineElement);
+
       lineName.onclick = () => {
         document.querySelectorAll('.line').forEach(line => line.classList.remove('selected'));
         lineElement.classList.add('selected');
         showTimes(line.name, currentDirection === 'start' ? line.start : line.finish, line.start, line.finish, line.comment, line.comment2);
       };
-      lineElement.appendChild(lineName);
-      linesElement.appendChild(lineElement);
     });
 
+    // Update the display to reflect the current direction
     updateDirectionButton();
+    updateLineDirections();
+  }
+
+  function updateLineDirections() {
+    const allLines = document.querySelectorAll('.line h2');
+    allLines.forEach(line => {
+      const [lineName, route] = line.textContent.split(': ');
+      const [start, finish] = route.split(' - ');
+      line.textContent = `${lineName}: ${currentDirection === 'start' ? start : finish} - ${currentDirection === 'start' ? finish : start}`;
+    });
   }
 
   function showTimes(lineName, start, originalStart, originalFinish, comment, comment2) {
@@ -182,6 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
     linesElement.style.display = 'block';
     timesElement.style.display = 'none';
     typeTabsElement.style.display = 'block'; // Show type tabs
+    headerElement.textContent = 'Red Vožnje'; // Clear the header
     updateDirectionButton();
+    updateLineDirections();
   };
 });
