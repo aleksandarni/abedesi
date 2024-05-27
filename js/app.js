@@ -87,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Update the display to reflect the current direction
-    updateDirectionButton();
     updateLineDirections();
   }
 
@@ -191,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function() {
     timesElement.style.display = 'none';
     typeTabsElement.style.display = 'block'; // Show type tabs
     headerElement.textContent = 'Red Vožnje'; // Clear the header
-    updateDirectionButton();
-    displayLines(currentLines, document.querySelector('#type-tabs .active').textContent); // Keep the current lines display
+    updateLineDirections();
   };
 });
