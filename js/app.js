@@ -8,11 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
   const headerElement = document.getElementById('header'); // Added header element
   let currentDirection = 'start'; // Default direction
   let currentTab = 'workdays'; // Default tab
+  let currentLines = []; // Store current lines
 
   // Fetch lines
   fetch('https://aleksandarni.github.io/abedesi/data/lines-min.json')
     .then(response => response.json())
     .then(lines => {
+      currentLines = lines;
       // Create tabs for line types
       const types = ['Gradska', 'Prigradska'];
       types.forEach(type => {
@@ -42,13 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showTimes(lineName, currentDirection === 'start' ? start : finish, start, finish, selectedLine.dataset.comment, selectedLine.dataset.comment2);
       }
     } else {
-      const activeTab = document.querySelector('#type-tabs .active');
-      if (activeTab) {
-        const type = activeTab.textContent;
-        fetch('https://aleksandarni.github.io/abedesi/data/lines-min.json')
-          .then(response => response.json())
-          .then(lines => displayLines(lines, type));
-      }
+      updateLineDirections();
     }
   };
 
@@ -196,6 +192,6 @@ document.addEventListener('DOMContentLoaded', function() {
     typeTabsElement.style.display = 'block'; // Show type tabs
     headerElement.textContent = 'Red Vožnje'; // Clear the header
     updateDirectionButton();
-    updateLineDirections();
+    displayLines(currentLines, document.querySelector('#type-tabs .active').textContent); // Keep the current lines display
   };
 });
