@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let currentTab = 'workdays'; // Default tab
 
   // Fetch lines
-  fetch('http://aleksandarnikolic.net/bus/v2/lines-min.json')
+  fetch('https://aleksandarni.github.io/abedesi/data/lines-min.json')
     .then(response => response.json())
     .then(lines => {
       // Create tabs for line types
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const activeTab = document.querySelector('#type-tabs .active');
       if (activeTab) {
         const type = activeTab.textContent;
-        fetch('http://aleksandarnikolic.net/bus/v2/lines-min.json')
+        fetch('https://aleksandarni.github.io/abedesi/data/lines-min.json')
           .then(response => response.json())
           .then(lines => displayLines(lines, type));
       }
@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update header with current direction
     headerElement.textContent = `Red vožnje za liniju ${lineName}: ${start} - ${start === originalStart ? originalFinish : originalStart}`;
 
-    fetch('http://aleksandarnikolic.net/bus/v2/times-min.json')
+    fetch('https://aleksandarni.github.io/abedesi/data/times-min.json')
       .then(response => response.json())
       .then(times => {
         const lineTimes = times.filter(time => time.name === lineName && time.start === start);
